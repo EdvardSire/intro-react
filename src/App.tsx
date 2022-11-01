@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+// Components
+import Header from './Header';
+import Input from './Input';
+
+const App = () => {
+  const [taskName, setTaskName] = useState('Create a task!');
+  const [taskList, setTaskList] = useState([]);
+
+  const removeTask = (i: number) => {
+    setTaskList(taskList.filter((item) => item !== taskList[i]))
+  };
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <Header name="To do list"/>
+      </div>
+
+      <div>
+        <Input taskName={taskName} setTaskName={setTaskName} taskList={taskList} setTaskList={setTaskList}/>
+      </div>
+
+      <div>
+        {taskList.map((item, i) => {
+          return(
+            <div key={i}>
+              {item}
+              <button className='button bg-blue-500 text-white px-2 rounded mx-10' onClick={() => {removeTask(i)}}>Done</button>
+            </div>
+          )
+        })}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
+
