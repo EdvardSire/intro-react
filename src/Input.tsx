@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { Dispatch } from 'react'
 
-const Input = (props: any) => {
+type InputType = {
+    taskName: string,
+    setTaskName: Dispatch<React.SetStateAction<string>>,
+    taskList: string[],
+    setTaskList: Dispatch<React.SetStateAction<string[]>>
+};
+
+const Input = ({taskName, setTaskName, taskList, setTaskList}: InputType) => {
     console.log()
-    const handleSubmit = (event: any) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        props.setTaskList([...props.taskList, props.taskName])
+        setTaskList([...taskList, taskName])
     };
     return(
         <form onSubmit={handleSubmit}>
-            <input className="input" value={props.taskName} onChange={(event) => props.setTaskName(event.target.value)}/>
+            <input className="input" value={taskName} onChange={(event) => setTaskName(event.target.value)}/>
             <button className='button bg-blue-500 text-white px-2 rounded'>New</button>
         </form>
     );
